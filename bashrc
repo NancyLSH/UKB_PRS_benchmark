@@ -1,0 +1,11 @@
+export TERM=linux
+export PATH=/data1/jiapl_group/lishuhua/software/conda/anaconda3/bin:$PATH
+export PATH=/data1/jiapl_group/lishuhua/software/general/:$PATH
+export PKG_CONFIG_PATH=/data1/jiapl_group/lishuhua/software/conda/anaconda3/lib/pkgconfig:$PKG_CONFIG_PATH
+alias screen="/data1/jiapl_group/lishuhua/software/screen-4.6.2/screen"
+alias PRScsx="/data1/jiapl_group/lishuhua/software/PRS/PRScsx/PRScsx.py"
+alias plink="/data1/jiapl_group/lishuhua/software/general/plink"
+alias plink2="/data1/jiapl_group/lishuhua/software/general/plink2"
+alias plink-1.9="/data1/jiapl_group/lishuhua/software/general/plink"
+alias gctb="/data1/jiapl_group/lishuhua/software/PRS/GCTB/gctb_2.5.4_Linux/gctb"
+alias popcorn="python /data1/jiapl_group/lishuhua/software/general/Popcorn-master/popcorn/__main__.py"
