@@ -1,6 +1,7 @@
 package <- "/data1/jiapl_group/lishuhua/software/PRS/PROSPER/PROSPER-main/"
 base_dir <- "/data1/jiapl_group/lishuhua/project/PRS_benchmark/software/prosper/"
 eur_base_dir <- "/data1/jiapl_group/lishuhua/project/PRS_benchmark/real_data/Cross_Validation/UKB_EUR/"
+plink_exec <- "/data1/jiapl_group/lishuhua/software/general/plink2"
 
 # trait_list <- c("waist", "height", "pulse", "dbp")
 # trait_list <- c("sbp", "smoke", "drink", "bmi")
@@ -8,11 +9,12 @@ eur_base_dir <- "/data1/jiapl_group/lishuhua/project/PRS_benchmark/real_data/Cro
 # trait_list <- c("lymph", "mono", "neut", "eos")
 # trait_list <- c("alt", "ast", "bun", "cholesterol")
 # trait_list <- c("creatinine", "ggt", "glucose", "hdl")
-trait_list <- c("ldl", "triglycerides", "ua")
+# trait_list <- c("ldl", "triglycerides", "ua")
+trait_list <- c("alt")
 
 for (trait in trait_list) {
   print(paste("Processing trait:", trait))
-  for (i in 1:10){
+  for (i in 10:10){
     print(paste("  Processing fold:", i))
     output_dir <- paste0(base_dir, "res/", trait, "/group_", i, "/lassosum2/")
     if (!dir.exists(output_dir)){
@@ -23,7 +25,7 @@ for (trait in trait_list) {
       print(paste("  EAS summary statistic file does not exist for group", i, "of trait", trait))
       next
     }
-    for (chrom in 1:22){
+    for (chrom in 22:22){
         print(paste("    Processing chromosome:", chrom))
         # summary statistic
         sst_eur <- paste0(base_dir, "train/EUR/", trait, "/group_", i, "_chr", chrom, ".txt")
@@ -64,9 +66,11 @@ for (trait in trait_list) {
         if (file.exists(paste0(output_file_prefix, "/EUR/R2.txt")) && file.exists(paste0(output_file_prefix, "/EAS/R2.txt"))){
           print(paste("      Output file already exists for group", i, "of trait", trait, "chromosome", chrom, ", skipping..."))
           next
+        } else if (condition) {
+           selected
         }
         # Run LassoSum
-        command <- paste0("Rscript ", package, "/scripts/lassosum2.R --PATH_package ", package, " --PATH_out ", output_file_prefix, " --PATH_plink /data1/jiapl_group/lishuhua/software/general/plink2 --FILE_sst ", sst_eur, ",", sst_eas, " --pop EUR,EAS --chrom ", chrom, " --bfile_tuning ", file_tuning_input, " --pheno_tuning ", file_tuning_pheno, " --bfile_testing ", file_test_input, " --pheno_testing ", file_test_pheno, " --testing TRUE --NCORES 5")
+        command <- paste0("Rscript ", package, "/scripts/lassosum2.R --PATH_package ", package, " --PATH_out ", output_file_prefix, " --PATH_plink ", plink_exec, " --FILE_sst ", sst_eur, ",", sst_eas, " --pop EUR,EAS --chrom ", chrom, " --bfile_tuning ", file_tuning_input, " --pheno_tuning ", file_tuning_pheno, " --bfile_testing ", file_test_input, " --pheno_testing ", file_test_pheno, " --testing TRUE --cleanup FALSE --NCORES 5")
         print(paste("      Running command:", command))
         system(command)
     }
